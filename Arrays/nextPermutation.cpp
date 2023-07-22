@@ -1,3 +1,5 @@
+//link https://leetcode.com/problems/next-permutation/
+
 #include <bits/stdc++.h>
 using namespace std;
 
