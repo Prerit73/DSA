@@ -12,6 +12,7 @@ vector<vector<int>> zeroMatrix(vector<vector<int>> &matrix, int n, int m) {
     // int row[n] = {0}; // row array
     // int col[m] = {0}; // col array
     vector<int>row(n,0),col(m,0);
+    //const row = new Array(n).fill(0); // row array in javascript
 
     // Traverse the matrix:
     for (int i = 0; i < n; i++) {
