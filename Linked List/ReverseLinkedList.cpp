@@ -42,6 +42,20 @@ Node* reverseLinkedList(Node* head){
     return prev;
 }
 
+Node* recursiveReverseLinkedList(Node* head){
+    if(head==NULL ||head->next==NULL){
+        return head;
+    }
+    
+    Node* newHead =  recursiveReverseLinkedList(head->next);
+    Node* front =  head->next;
+    front->next = head;
+    
+    head->next = NULL;
+    return newHead;
+    
+}
+
 void printLinkedList(Node* head){
     Node* temp = head;
     while (temp != nullptr) {
