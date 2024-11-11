@@ -13,15 +13,15 @@ public:
         next = NULL;
     }
 
-    Node(int data)
+    Node(int data1)
     {
-        data = data;
+        data = data1;
         next = NULL;
     }
 
-    Node(int data, Node *next)
+    Node(int data1, Node *next)
     {
-        data = data;
+        data = data1;
         next = next;
     }
 };

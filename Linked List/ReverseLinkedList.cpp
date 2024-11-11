@@ -72,7 +72,7 @@ int main(){
     head->next->next = new Node(3);
     head->next->next->next = new Node(4);
 
-    head = reverseLinkedList(head);
+    head = recursiveReverseLinkedList(head);
     printLinkedList(head);
     
     return 0;
