@@ -1,37 +1,54 @@
-const myPromiseAll = function (taskList) {
-    //to store results
+const promiseAll = function (tasks) {
     const results = [];
-    //to track how many promises have completed
-    let promisesCompleted = 0;
-    // return new promise
-    return new Promise((resolve, reject) => {
-        taskList.forEach((promise, index) => {
-            //if promise passes
-            promise.then((val) => {
-                //store its outcome and increment the count
-                results[index] = val;
-                promisesCompleted += 1;
-                //if all the promises are completed,
-                //resolve and return the result
-                if (promisesCompleted === taskList.length) {
-                    resolve(results)
-                }
-            })//if any promise fails, reject.
-                .catch(error => {
-                    reject(error)
-                })
-        })
-    });
-}
+    let completedCount = 0;
 
-const allSettled = (promises) => {
-    // map the promises to return a custom response.
-    const mappedPromises = promises.map((p) => Promise.resolve(p)
-        .then(
-            val => ({ status: 'fulfilled', value: val }),
-            err => ({ status: 'rejected', reason: err })
-        )
-    );
-    // run all the promises once with .all
-    return Promise.all(mappedPromises);
+    return new Promise((resolve, reject) => {
+        if (tasks.length === 0) {
+            resolve([]);
+            return;
+        }
+
+        tasks.forEach((task, index) => {
+            Promise.resolve(task) // Ensure it's a promise
+                .then((value) => {
+                    results[index] = value;
+                    completedCount += 1;
+                    if (completedCount === tasks.length) {
+                        resolve(results);
+                    }
+                })
+                .catch((error) => {
+                    reject(error); // Stops execution on first rejection
+                });
+        });
+    });
+};
+
+
+function promiseAllSettled(tasks) {
+    return new Promise(function (resolve) {
+        const results = [];
+        let completedCount = 0;
+
+        if (tasks.length === 0) {
+            resolve([]);
+            return;
+        }
+
+        tasks.forEach(function (task, index) {
+            Promise.resolve(task)
+                .then(function (value) {
+                    results[index] = { status: "fulfilled", value: value };
+                })
+                .catch(function (reason) {
+                    results[index] = { status: "rejected", reason: reason };
+                })
+                .then(function () { // Instead of .finally()
+                    completedCount++;
+                    if (completedCount === tasks.length) {
+                        resolve(results);
+                    }
+                });
+        });
+    });
 }
